@@ -6,6 +6,7 @@ class FlavourNotifier extends ChangeNotifier {
   final FlavourRepository flavourRepository;
   List<FlavourData> flavours = [];
   bool isLoading = false;
+  String message = "";
 
   FlavourNotifier({required this.flavourRepository});
 
@@ -18,5 +19,19 @@ class FlavourNotifier extends ChangeNotifier {
     flavours.addAll(flavour.data ?? []);
     isLoading = false;
     notifyListeners();
+  }
+
+  Future<void> deleteFlavour(String id) async {
+    isLoading = true;
+    notifyListeners();
+    final response = await flavourRepository.deletePost(id);
+    if (response) {
+      message = "Product deleted successfully";
+    } else {
+      message = "Error happened while deleting product";
+    }
+    isLoading = false;
+    notifyListeners();
+    await getAllFlavours();
   }
 }

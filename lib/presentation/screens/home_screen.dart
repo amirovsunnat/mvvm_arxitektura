@@ -23,8 +23,7 @@ class FlavoursScreen extends StatelessWidget {
             final FlavourData flavourData = flavourNotifier.flavours[index];
             return GestureDetector(
               onTap: () async {
-                // await postService.deletePost(flavourData.id.toString());
-                // setState(() {});
+                await flavourNotifier.deleteFlavour(flavourData.id.toString());
               },
               child: Container(
                 child: Column(
